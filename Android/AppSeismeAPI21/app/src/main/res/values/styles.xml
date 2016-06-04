@@ -1,0 +1,10 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar" />
+
+    <style name="ThemeForApi21" parent="Theme.AppCompat.NoActionBar" />
+
+    <style name="TestApp" parent="android:Theme.Material.Light.NoActionBar" />
+
+</resources>
