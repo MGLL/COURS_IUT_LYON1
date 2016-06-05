@@ -1,5 +1,9 @@
 package myapps.androidappapi21;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,10 +13,11 @@ import java.util.ArrayList;
 /**
  * Created by Guillaume on 02/06/2016.
  */
-public class JsonParser {
+public class JsonParser{
     public JsonParser(){
 
     }
+
 
     public ArrayList<Seisme> parseJson(String sBuilder){
         try{
@@ -28,6 +33,7 @@ public class JsonParser {
                 Seisme seisme = new Seisme(properties.optString("title"),properties.optString("place"),Long.parseLong(properties.optString("time")),
                         properties.optString("url"),properties.optString("mag"),
                         geometry.optJSONArray("coordinates").getDouble(1),geometry.optJSONArray("coordinates").getDouble(0));
+
                 listeSeisme.add(seisme);
             }
 
@@ -37,5 +43,6 @@ public class JsonParser {
 
         return listeSeisme;
     }
+
     java.util.ArrayList<Seisme> listeSeisme;
 }
