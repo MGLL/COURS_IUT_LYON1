@@ -84,5 +84,5 @@ public class SplashScreen extends Activity {
     }
     static StringBuilder stringBuilder;
     private String stringVide;
-    private static int SPLASH_TIME_OUT = 4000;
+    private static int SPLASH_TIME_OUT = 0;
 }
