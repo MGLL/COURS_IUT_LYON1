@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
                         limiteMangitude = Double.parseDouble(sharePref.getString("limiteMag","0"));
                         for(Seisme s: listeSeisme){
                             double magnitudeToTest = Double.parseDouble(s.getMagnitude());
-                            if(magnitudeToTest>limiteMangitude){
+                            if(magnitudeToTest>=limiteMangitude){
+                                System.out.println("magnitudeToTest : "+magnitudeToTest);
+                                System.out.println("limiteMagnitude : "+limiteMangitude);
                                 listeToView.add(s);
                             }
                         }
@@ -61,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         adapter = new CustomAdapter(getApplicationContext(), listeSeisme);
                     }
+                }
+
+                for(Seisme t : listeToView){
+                    System.out.println("Voici le titre de t : "+t.getTitle()+
+                            "Voici la magnitude de t : "+t.getMagnitude());
                 }
 
                 String messageToToast = "Vos préférences : \nMangitude min : "+sharePref.getString("limiteMag","0");
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Seisme selection = listeSeisme.get(position);
+                        Seisme selection = listeToView.get(position);
                         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                         intent.putExtra("SeismeInList", selection);
                         startActivity(intent);
