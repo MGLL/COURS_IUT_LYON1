@@ -5,21 +5,32 @@ import java.io.Serializable;
 /**
  * Created by Guillaume on 02/06/2016.
  */
-public class Seisme implements Serializable {
-    public Seisme(){
 
+/* Cette class permet de stocker les informations extraites du flux Json dans un objet "Séisme". On stock : title, place,
+time, urlDetailsUSGS, magnitude, latitude et longitude.
+Cette objet sera ensuite stocké dans une ArrayList dans MainActivity*/
+
+public class Seisme implements Serializable {
+
+    public Seisme(){
+        // Constructeur vide.
     }
 
-    public Seisme(String title, String place, long time, String urlDetailUCGS,
+    // Constructeur.
+    public Seisme(String title, String place, long time, String urlDetailUSGS,
                   String magnitude, double latitude, double longitude){
         this.title=title;
         this.place=place;
         this.time=time;
-        this.urlDetailUCGS=urlDetailUCGS;
+        this.urlDetailUSGS=urlDetailUSGS;
         this.magnitude=magnitude;
         this.latitude=latitude;
         this.longitude=longitude;
     }
+
+      /*                    */
+     /* SETTERS & GETTERS  */
+    /*                    */
 
     public String getTitle(){
         return this.title;
@@ -28,7 +39,7 @@ public class Seisme implements Serializable {
         return this.place;
     }
     public String getUrlDetailUCGS(){
-        return this.urlDetailUCGS;
+        return this.urlDetailUSGS;
     }
     public long getTime(){
         return this.time;
@@ -50,7 +61,7 @@ public class Seisme implements Serializable {
         this.place=place;
     }
     public void setUrlDétailUCGS(String urlDetailUCGS){
-        this.urlDetailUCGS=urlDetailUCGS;
+        this.urlDetailUSGS=urlDetailUCGS;
     }
     public void setTime(long time){this.time=time;}
     public void setMagnitude(String magnitude){
@@ -63,13 +74,11 @@ public class Seisme implements Serializable {
         this.longitude=longitude;
     }
 
-    public String toString(){
-        return ""+longitude;
-    }
+    /* Déclaration de variable */
 
     private String title;
     private String place;
-    private String urlDetailUCGS;
+    private String urlDetailUSGS;
     private long time;
     private String magnitude;
     private double latitude;
