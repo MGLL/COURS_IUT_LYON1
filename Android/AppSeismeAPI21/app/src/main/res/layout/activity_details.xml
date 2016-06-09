@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="TIME :"
+        android:text="HEURE :"
         android:id="@+id/time"
         android:layout_below="@+id/date_display"
         android:layout_marginTop="40dp"
@@ -118,9 +118,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View on map"
+        android:text="Carte"
         android:id="@+id/buttonViewOnMap"
         android:layout_alignTop="@+id/buttonLienUCGS"
-        android:layout_toEndOf="@+id/time_display" />
+        android:layout_toEndOf="@+id/place" />
 
 </RelativeLayout>

@@ -13,8 +13,13 @@ import java.util.ArrayList;
 /**
  * Created by Guillaume on 02/06/2016.
  */
+
+/* Cette class, CustomAdapter, sert à adapter comme on le souhaite les éléments de la listView.
+    (Peut ajouter des images, du texte supplémentaire ou une couleur spécifique pour le texte. */
+
 public class CustomAdapter extends BaseAdapter {
-    ArrayList<Seisme> myList = new ArrayList<Seisme>();
+    //On déclare une array liste pour récupérer les informations reçu sur les séismes.
+    ArrayList<Seisme> myList = new ArrayList<>();
     Context context;
 
     public CustomAdapter(Context context,ArrayList<Seisme> myList) {
@@ -33,11 +38,13 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MyViewHolder mViewHolder = null;
+        //C'est ici que l'on va personnaliser notre ListView comme on le souhaite.
+        MyViewHolder mViewHolder;
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater) context
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
+            //On récupère l'exemple pour personnaliser.
             convertView = mInflater.inflate(R.layout.list_item_view, parent, false);
 
             mViewHolder = new MyViewHolder();
@@ -49,6 +56,7 @@ public class CustomAdapter extends BaseAdapter {
         }
 
         Seisme listItem = (Seisme) getItem(position);
+        //On ne récupère que la "place" pour afficher dans la listView.
         mViewHolder.textViewTitle.setText(listItem.getPlace());
         return convertView;
     }
