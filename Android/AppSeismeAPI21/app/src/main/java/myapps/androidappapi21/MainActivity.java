@@ -63,23 +63,22 @@ public class MainActivity extends AppCompatActivity {
                 //Sinon on récupère les informations.
                 listeSeisme = jSonCut.parseJson(jsonToParse);
 
-                if(sharePref.getString("limiteMag","0")!=null){
-                    //Selon la préférence de magnitude minimal de l'utilisateur, on récupère les séismes concernés.
-                    if(!(sharePref.getString("limiteMag","0").equals(""))){
-                        limiteMangitude = Double.parseDouble(sharePref.getString("limiteMag","0"));
-                        for(Seisme s: listeSeisme){
-                            magnitudeToTest = Double.parseDouble(s.getMagnitude());
-                            if(magnitudeToTest>=limiteMangitude){
-                                listeToView.add(s);
-                            }
+                //Selon la préférence de magnitude minimal de l'utilisateur, on récupère les séismes concernés.
+                if(!(sharePref.getString("limiteMag","0").equals(""))){
+                    limiteMangitude = Double.parseDouble(sharePref.getString("limiteMag","0"));
+                    for(Seisme s: listeSeisme){
+                        magnitudeToTest = Double.parseDouble(s.getMagnitude());
+                        if(magnitudeToTest>=limiteMangitude){
+                            listeToView.add(s);
                         }
-
-                        // On prépare l'adapter spécifique.
-                        adapter = new CustomAdapter(getApplicationContext(), listeToView);
-                    }else{
-                        adapter = new CustomAdapter(getApplicationContext(), listeSeisme);
                     }
+
+                    // On prépare l'adapter spécifique.
+                    adapter = new CustomAdapter(getApplicationContext(), listeToView);
+                }else{
+                    adapter = new CustomAdapter(getApplicationContext(), listeSeisme);
                 }
+
 
                 // On applique l'adapter pour la listView.
                 mListView.setAdapter(adapter);
@@ -187,6 +186,9 @@ public class MainActivity extends AppCompatActivity {
     private double limiteMangitude;
     private boolean wifi;
     private boolean connect;
+
+    private String urlToCharge;
+
     SharedPreferences sharePref;
     private java.util.ArrayList<Seisme> listeSeisme;
     private java.util.ArrayList<Seisme> listeToView;

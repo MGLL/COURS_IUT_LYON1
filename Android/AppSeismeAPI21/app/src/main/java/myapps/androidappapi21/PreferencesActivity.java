@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 /**
@@ -33,6 +34,29 @@ public class PreferencesActivity extends Activity{
         Button btnValider = (Button) findViewById(R.id.buttonValiderPref);
         editMangitude = (EditText) findViewById(R.id.saisieMagnitude);
 
+        // On récupère les radioButton du layout.
+        radio1 = (RadioButton) findViewById(R.id.radioButtonRecent);
+        radio2 = (RadioButton) findViewById(R.id.radioButtonJournee);
+        radio3 = (RadioButton) findViewById(R.id.radioButtonSemaine);
+
+        // On regarde des les préférences enregistrées si des valeurs existent.
+        // Si oui on coche le bouton et on donne la valeur correspondant à celle actuellement stockée.
+        if(sharePref.getString("urlAffiche","").equals("Récent")){
+            urlToCharge = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_hour.geojson";
+            urlToAffiche = "Récent";
+            radio1.setChecked(true);
+        }else if (sharePref.getString("urlAffiche","").equals("Journée")){
+            urlToCharge = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson";
+            urlToAffiche = "Journée";
+            radio2.setChecked(true);
+        }else if (sharePref.getString("urlAffiche","").equals("Semaine")){
+            urlToCharge = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
+            urlToAffiche = "Semaine";
+            radio3.setChecked(true);
+        } else {
+            urlToAffiche = "Aucun";
+        }
+
 
         btnAnnuler.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,10 +73,34 @@ public class PreferencesActivity extends Activity{
         });
 
         //On affiche dans un Toast les préférences actuelles de l'utilisateur.
-        messageToToast = "Vos préférences : \nMangitude min : "+sharePref.getString("limiteMag","0");
+        messageToToast = "Vos préférences : \nMangitude min : "+sharePref.getString("limiteMag","0")+"\nChargement : "+sharePref.getString("urlAffiche","");
         Toast.makeText(PreferencesActivity.this, messageToToast, Toast.LENGTH_LONG).show();
     }
 
+    // Si l'utilisateur à coché un des trois choix, on donne les données correspondantes.s
+    public void onRadioButtonClicked(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+        switch(view.getId()){
+            case R.id.radioButtonRecent :
+                if (checked){
+                    urlToCharge = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_hour.geojson";
+                    urlToAffiche = "Récent";
+                }
+                break;
+            case R.id.radioButtonJournee :
+                if (checked){
+                    urlToCharge = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson";
+                    urlToAffiche = "Journée";
+                }
+                break;
+            case R.id.radioButtonSemaine :
+                if (checked){
+                    urlToCharge = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
+                    urlToAffiche = "Semaine";
+                }
+                break;
+        }
+    }
 
     private void annulerAction(){
         //Gestion de l'annulation.
@@ -65,13 +113,20 @@ public class PreferencesActivity extends Activity{
         //Si validation
         SharedPreferences.Editor sPrefEdit = sharePref.edit();
 
-        //On récupère les préférences (magnitude) si elle n'est pas null.
+        // Si (seulement si) l'utilisateur à changé de préférence.
+        // On récupère la préférence de magnitude
+        // Et on la stock.
         if(!(editMangitude.getText().toString().equals(""))){
             limiteMangitude = editMangitude.getText().toString();
+            sPrefEdit.putString("limiteMag",limiteMangitude);
         }
 
-        //Et on la stock.
-        sPrefEdit.putString("limiteMag",limiteMangitude);
+        // Si (seulement si) l'utilisateur à changé de préférence, on stock les nouvelles.
+        if(radio1.isChecked() || radio2.isChecked() || radio3.isChecked()){
+            //On récupère aussi le lien choisis.
+            sPrefEdit.putString("urlToCharge",urlToCharge);
+            sPrefEdit.putString("urlAffiche",urlToAffiche);
+        }
 
         sPrefEdit.commit();
 
@@ -84,6 +139,11 @@ public class PreferencesActivity extends Activity{
     private String limiteMangitude;
     private EditText editMangitude;
     private String messageToToast;
+    private String urlToCharge;
+    private String urlToAffiche;
+    private RadioButton radio1;
+    private RadioButton radio2;
+    private RadioButton radio3;
     private SharedPreferences sharePref;
     static String PREFS_NAME = "preferences";
 

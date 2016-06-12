@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test - connexion"
+        android:layout_marginTop="5dp"
+        android:id="@+id/buttonTestConnection"
+        android:layout_below="@+id/title_acceuil_display"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="USGS Information - Application"
+        android:id="@+id/title_acceuil_display"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Recent Earthquake :"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/buttonTestConnection"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonGoogle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Connexion non testé"
+        android:id="@+id/textViewConnexion"
+        android:layout_marginBottom="12dp"
+        android:layout_alignBottom="@+id/buttonTestConnection"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Google Map"
+        android:id="@+id/buttonGoogle"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/title_acceuil_display" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Préférences"
+        android:id="@+id/buttonPreferences"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/title_acceuil_display" />
+
+</RelativeLayout>
