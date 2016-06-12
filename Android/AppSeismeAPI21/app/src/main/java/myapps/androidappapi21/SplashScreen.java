@@ -3,6 +3,7 @@ package myapps.androidappapi21;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -31,6 +32,17 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        // On récupère les informations correspondant au lien à charger dans les préférences.
+        // Si c'est la première fois que l'utilisateur lance (donc url = "") on prend la journée par défaut.
+        // Sinon on récupère les préférences.
+        sharePref = getSharedPreferences(PreferencesActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        if (sharePref.getString("urlToCharge","").equals("")){
+            urlToCharge = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson";
+        } else {
+            urlToCharge = sharePref.getString("urlToCharge","");
+        }
+
 
         ConnectivityManager connectivity =
                 (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -65,9 +77,11 @@ public class SplashScreen extends Activity {
         @Override
         protected String doInBackground(Object... params) {
             reader = null;
+
             try {
                 //On utilise l'URL des séismes récents.
-                url = new URL("http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson");
+                System.out.println(urlToCharge);
+                url = new URL(urlToCharge);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 //On se connecte.
                 urlConnection.connect();
@@ -109,5 +123,7 @@ public class SplashScreen extends Activity {
     private boolean connect;
     private URL url;
     private BufferedReader reader;
+    private String urlToCharge;
+    SharedPreferences sharePref;
     private int SPLASH_TIME_OUT = 0;
 }
